@@ -557,9 +557,23 @@ const Index = () => {
                 <Icon name="Cross" className="text-primary" size={24} />
                 <span className="text-xl font-bold">ПластикКлиник</span>
               </div>
-              <p className="text-gray-300">
+              <p className="text-gray-300 mb-4">
                 Профессиональная пластическая хирургия с индивидуальным подходом
               </p>
+              <div className="flex space-x-4">
+                <a href="https://vk.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Users" size={20} />
+                </a>
+                <a href="https://t.me/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="MessageCircle" size={20} />
+                </a>
+                <a href="https://wa.me/74951234567" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Phone" size={20} />
+                </a>
+                <a href="https://instagram.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Camera" size={20} />
+                </a>
+              </div>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Контакты</h4>
@@ -570,17 +584,47 @@ const Index = () => {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Режим работы</h4>
-              <div className="space-y-2 text-gray-300">
-                <p>Пн-Пт: 9:00-18:00</p>
-                <p>Сб: 10:00-16:00</p>
-                <p>Вс: выходной</p>
+              <h4 className="font-semibold mb-4">Мы в соцсетях</h4>
+              <div className="space-y-3">
+                <a href="https://vk.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Users" size={16} />
+                  <span>ВКонтакте</span>
+                </a>
+                <a href="https://t.me/plastikklinik" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="MessageCircle" size={16} />
+                  <span>Telegram</span>
+                </a>
+                <a href="https://wa.me/74951234567" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Phone" size={16} />
+                  <span>WhatsApp</span>
+                </a>
+                <a href="https://instagram.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-300 hover:text-primary transition-colors">
+                  <Icon name="Camera" size={16} />
+                  <span>Instagram</span>
+                </a>
               </div>
             </div>
           </div>
           <Separator className="my-6" />
-          <div className="text-center text-gray-400">
+          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400">
             <p>&copy; 2024 ПластикКлиник. Все права защищены.</p>
+            <div className="flex items-center space-x-4 mt-4 md:mt-0">
+              <span className="text-sm">Следите за нами:</span>
+              <div className="flex space-x-3">
+                <a href="https://vk.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+                  <Icon name="Users" size={16} />
+                </a>
+                <a href="https://t.me/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+                  <Icon name="MessageCircle" size={16} />
+                </a>
+                <a href="https://wa.me/74951234567" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+                  <Icon name="Phone" size={16} />
+                </a>
+                <a href="https://instagram.com/plastikklinik" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
+                  <Icon name="Camera" size={16} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

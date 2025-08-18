@@ -14,6 +14,10 @@ const Index = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewsList, setReviewsList] = useState([]);
 
   const services = [
     {
@@ -47,23 +51,41 @@ const Index = () => {
     '14:00', '15:00', '16:00', '17:00'
   ];
 
-  const reviews = [
+  const [reviews, setReviews] = useState([
     {
       name: 'Анна К.',
       text: 'Прекрасный результат ринопластики. Доктор очень профессионален.',
-      rating: 5
+      rating: 5,
+      date: '15 августа 2024'
     },
     {
       name: 'Мария С.',
       text: 'Отличная работа, результат превзошел ожидания. Рекомендую!',
-      rating: 5
+      rating: 5,
+      date: '10 августа 2024'
     },
     {
       name: 'Елена В.',
       text: 'Очень внимательный подход, качественная работа.',
-      rating: 5
+      rating: 5,
+      date: '5 августа 2024'
     }
-  ];
+  ]);
+
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const newReview = {
+      name: formData.get('name') as string,
+      text: formData.get('text') as string,
+      rating: reviewRating,
+      date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+    };
+    setReviews([newReview, ...reviews]);
+    setIsReviewOpen(false);
+    setReviewRating(0);
+    (e.target as HTMLFormElement).reset();
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -318,15 +340,26 @@ const Index = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Отзывы пациентов</h2>
             <p className="text-lg text-muted-foreground">Что говорят наши клиенты</p>
+            <Dialog open={isReviewOpen} onOpenChange={setIsReviewOpen}>
+              <DialogTrigger asChild>
+                <Button className="mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Icon name="Plus" className="mr-2" size={16} />
+                  Оставить отзыв
+                </Button>
+              </DialogTrigger>
+            </Dialog>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {reviews.map((review, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Icon key={i} name="Star" className="text-yellow-400 fill-current" size={16} />
-                    ))}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Icon key={i} name="Star" className="text-yellow-400 fill-current" size={16} />
+                      ))}
+                    </div>
+                    <span className="text-xs text-muted-foreground">{review.date}</span>
                   </div>
                   <p className="text-muted-foreground mb-4">"{review.text}"</p>
                   <p className="font-semibold">{review.name}</p>
@@ -449,6 +482,69 @@ const Index = () => {
               Записаться
             </Button>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Review Dialog */}
+      <Dialog open={isReviewOpen} onOpenChange={setIsReviewOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Оставить отзыв</DialogTitle>
+            <DialogDescription>Поделитесь своим опытом с другими пациентами</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmitReview} className="space-y-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Ваша оценка</label>
+              <div className="flex items-center space-x-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setReviewRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="focus:outline-none"
+                  >
+                    <Icon 
+                      name="Star" 
+                      className={`transition-colors ${
+                        star <= (hoverRating || reviewRating) 
+                          ? 'text-yellow-400 fill-current' 
+                          : 'text-gray-300'
+                      }`}
+                      size={24}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Input name="name" placeholder="Ваше имя" required />
+              <Textarea 
+                name="text" 
+                placeholder="Расскажите о своем опыте..." 
+                required 
+                className="min-h-[100px]"
+              />
+            </div>
+            <div className="flex space-x-2">
+              <Button 
+                type="button"
+                variant="outline"
+                className="flex-1"
+                onClick={() => setIsReviewOpen(false)}
+              >
+                Отмена
+              </Button>
+              <Button 
+                type="submit"
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                disabled={reviewRating === 0}
+              >
+                Отправить
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
 
